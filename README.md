@@ -8,9 +8,9 @@ Steps :
 5.   Create private Subnet
 6.   Create Application Load Balancer
 7.   Create  alb target group
-8.   Create  alb listner
-9.            a.http
-10.           b.https
+8.   Create  alb listener
+9.   a.http
+10.  b.https
 11. Create security group
 12. Create security group rule
 13. Associate Subnet with Route Table
