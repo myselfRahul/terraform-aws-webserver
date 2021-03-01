@@ -92,7 +92,7 @@ resource "aws_lb_target_group" "my-target-group" {
   vpc_id      = aws_vpc.web-app-vpc.id
 }
 
-
+# Create Load Balancer
 resource "aws_lb" "my-aws-alb" {
   name     = "my-test-alb"
   internal = false
@@ -111,6 +111,9 @@ resource "aws_lb" "my-aws-alb" {
   load_balancer_type = "application"
 }
 
+# Create Load HTTP balancer Listener
+
+
 resource "aws_lb_listener" "my-http-alb-listner" {
   load_balancer_arn = aws_lb.my-aws-alb.arn
   port              = 80
@@ -123,6 +126,8 @@ resource "aws_lb_listener" "my-http-alb-listner" {
 }
 
 
+# Create Load HTTPS balancer Listener
+
 resource "aws_lb_listener" "my-https-alb-listner" {
   load_balancer_arn = aws_lb.my-aws-alb.arn
   port              = 443
@@ -133,10 +138,14 @@ resource "aws_lb_listener" "my-https-alb-listner" {
     target_group_arn = aws_lb_target_group.my-target-group.arn
   }
 }
+ # Create Security group
+
 resource "aws_security_group" "my-alb-sg" {
   name   = "my-alb-sg"
   vpc_id = aws_vpc.web-app-vpc.id 
 }
+
+ # Create Security group rule for port 22
 
 resource "aws_security_group_rule" "inbound_ssh" {
   from_port         = 22
@@ -146,6 +155,8 @@ resource "aws_security_group_rule" "inbound_ssh" {
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
 }
+
+ # Create Security group rule for port 80
 
 resource "aws_security_group_rule" "inbound_http" {
   from_port         = 80
@@ -182,6 +193,8 @@ resource "aws_route_table_association" "a" {
 
 }
 
+#create  Network Interface 
+
 resource "aws_network_interface" "web-nic" {
   subnet_id       = aws_subnet.sebnet-1.id
   private_ips     = ["10.0.1.50"]
@@ -200,6 +213,7 @@ resource "aws_eip" "one" {
 
 
 # Create Ubuntu Server and install/enable apache2
+
 resource "aws_instance" "web-server-instance" {
 
     ami = "ami-09a6a7e49bd29554b"
